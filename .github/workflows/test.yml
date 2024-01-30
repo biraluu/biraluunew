@@ -27,5 +27,17 @@ jobs:
     
     - name: building npm
       run: |
-        npm start
+       - CI=false num run build
+       - name: Build Application
+       run: |
+         - CI=false npm run build
+ 
+    - name: Transfer Build Files to Ubuntu Instance
+      uses: appleboy/scp-action@master
+      with:
+         host: ${{ secrets.REMOTE_HOST }}
+         username: ${{ secrets.REMOTE_USERNAME }}
+         key: ${{ secrets.SSH_PRIVATE_KEY }}
+         source: "build"
+         target: "/tmp"
         

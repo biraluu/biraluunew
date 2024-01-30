@@ -1,39 +1,45 @@
-name: Transfer Build Files
+name: hello world
 
 on:
   push:
     branches:
-      - main
+       - main
+    
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     defaults:
-      run:
-        working-directory: ./all_in_docker/client
+        run:
+            working-directory: all_in_docker/client
 
     steps:
-    - name: Checkout Repository
+    - name: checkout repo
       uses: actions/checkout@v2
-
-    - name: Set up Node.js
+    
+    - name: setup node
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
+        node-version: "16"
 
-    - name: Install Dependencies
-      run: npm install   
-
+    - name: npm install
+      run: npm i
+    
+    - name: building npm
+      run: |
+       - CI=false num run build
+    
     - name: Build Application
       run: |
-        - CI=false npm run build
-
+         - CI=false npm run build
+ 
     - name: Transfer Build Files to Ubuntu Instance
       uses: appleboy/scp-action@master
       with:
+
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         source: "build"
-        target: "/tmp
+         target: "/tmp"
         

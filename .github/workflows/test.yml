@@ -24,5 +24,6 @@ jobs:
       run: npm i
     
     - name: building npm
-      run: npm start
+      run: |
+        npm start
         

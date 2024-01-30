@@ -1,0 +1,26 @@
+name: hello world
+
+on:
+  push:
+    branches:
+       - main
+    
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./all_in_docker/client
+
+    steps:
+    
+    - name: setup node
+      uses: actions/setup-node@v3
+
+    - name: npm install
+      run: npm i
+    
+    - name: building npm
+      run: npm start
+        
